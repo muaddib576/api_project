@@ -1,0 +1,9 @@
+{
+    "python.pythonPath": "/Users/brian/Library/Caches/pypoetry/virtualenvs/trello-cli-8OasPWz5-py3.8/bin/python",
+    "extensions.ignoreRecommendations": true,
+    "files.autoSave": "off",
+    "typescript.tsc.autoDetect": "off",
+    "npm.autoDetect": "off",
+    "debug.allowBreakpointsEverywhere": true,
+    "html.autoClosingTags": false
+}

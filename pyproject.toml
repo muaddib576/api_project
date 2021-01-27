@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "trello_cli"
+version = "0.1.0"
+description = ""
+authors = ["muaddib576 <36249678+muaddib576@users.noreply.github.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+requests = "^2.25.1"
+jedi = "<0.18.0"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+ipython = "^7.19.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
