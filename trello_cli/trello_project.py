@@ -1,3 +1,16 @@
+"""
+Trello CLI
+
+Final project for Web APIs lesson
+https://alissa-huskey.github.io/python-class/lessons/web-apis.html
+
+TODO
+----
+[x] Phase 1: Print the open cards from your To Do list.
+[ ] Phase 2: Show card details
+    [ ] Include any checklist items
+
+"""
 from private import trello_key, trello_token
 import requests
 from pprint import pprint
@@ -28,10 +41,35 @@ def api_request():
     json_data = response.json()
     return json_data
 
+def api_request_checklist(checklist_id):
+    """Requests checklist info associated with specified card"""
+
+    checklist_endpoint = f"checklists/{checklist_id[0]}"
+
+    url = f"https://api.trello.com/1/{checklist_endpoint}"
+
+    response = requests.get(
+        url,
+        params = {
+            'key': trello_key,
+            'token': trello_token
+            }
+        )
+
+    if response.ok == False:
+        print(f"There was a {response.status_code} error! Because: {response.reason}")
+        return
+
+    checklist_api_data = response.json()
+
+    checklist_items = checklist_api_data['checkItems']
+
+    return checklist_items
+
 def print_cards(data):
     """Takes raw data from API_request and formats/prints active cards, more info available if user requests it"""
 
-    #prints card id, name, shorturl, and labels
+    #prints card id, name, shorturl, and labels for all active cards
     for i, card in enumerate(data, 1):
         if card['subscribed'] == False:
             continue
@@ -50,12 +88,15 @@ def print_cards(data):
         print("Labels: " + ", ".join(label_list))
         print()
 
-    card_selection = int(input("Which Card would you like more info on? Card: "))
+def print_checklist(list_data):
+    """Prints the checklist items associated with the selected card and their status"""
 
-    for i, card in enumerate(data, 1):
-        if i == card_selection:
-            print(card['desc'])
-
+    for i , checklist in enumerate(list_data, 1):        
+        if checklist['state'] == 'complete':
+            print("[X]", end = " ")
+        else:
+            print("[ ]", end = " ")
+        print(checklist['name'])
 
 
 def main():
@@ -63,5 +104,22 @@ def main():
     data = api_request()
 
     print_cards(data)
+
+    #user requests a specific card and the prints the description, checklist items, and maybe more?
+    card_selection = int(input("Which Card would you like more info on? Card: "))
+
+    for i, card in enumerate(data, 1):
+        if i == card_selection:
+            print("-" * 30)
+            print(f"Card {i}")
+            print("-" * 30)
+            print(f"Description: {card['desc']}")
+            
+            #checks if there are checklist items for card, and prints if applicable
+            if bool(card['idChecklists']) == True:
+                print("Checklist:")
+                checklist_data = api_request_checklist(card['idChecklists'])
+                print_checklist(checklist_data)
+
 
 main()

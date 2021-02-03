@@ -1,0 +1,133 @@
+[
+  {
+    "name": "QCC: Brian",
+    "desc": "",
+    "descData": null,
+    "closed": false,
+    "idOrganization": "5f1c9f1575b71d05cbddb1c2",
+    "idEnterprise": null,
+    "limits": null,
+    "pinned": null,
+    "shortLink": "mnXRPHDL",
+    "powerUps": [],
+    "dateLastActivity": "2021-01-13T00:44:03.807Z",
+    "idTags": [],
+    "datePluginDisable": null,
+    "creationMethod": null,
+    "ixUpdate": null,
+    "enterpriseOwned": false,
+    "idBoardSource": "5f1ca2e2c0aedc5caca34e36",
+    "idMemberCreator": "52969a4ee6906d4c2c0088ad",
+    "id": "5ffe4253796d4a2067343519",
+    "starred": false,
+    "url": "https://trello.com/b/mnXRPHDL/qcc-brian",
+    "prefs": {
+      "permissionLevel": "org",
+      "hideVotes": false,
+      "voting": "disabled",
+      "comments": "members",
+      "invitations": "admins",
+      "selfJoin": false,
+      "cardCovers": true,
+      "isTemplate": false,
+      "cardAging": "regular",
+      "calendarFeedEnabled": false,
+      "background": "5f5e89bd2690228496dcb00a",
+      "backgroundImage": "https://trello-backgrounds.s3.amazonaws.com/SharedBackground/original/e17eeea58c87cf1f6fee69a02a692b74/photo-1599978364004-95d0725c5bb9",
+      "backgroundImageScaled": [
+        {
+          "width": 140,
+          "height": 93,
+          "url": "https://trello-backgrounds.s3.amazonaws.com/SharedBackground/140x93/38abcb12d37a2c226542090a8769aae2/photo-1599978364004-95d0725c5bb9.jpg"
+        },
+        {
+          "width": 256,
+          "height": 171,
+          "url": "https://trello-backgrounds.s3.amazonaws.com/SharedBackground/256x171/38abcb12d37a2c226542090a8769aae2/photo-1599978364004-95d0725c5bb9.jpg"
+        },
+        {
+          "width": 480,
+          "height": 320,
+          "url": "https://trello-backgrounds.s3.amazonaws.com/SharedBackground/480x320/38abcb12d37a2c226542090a8769aae2/photo-1599978364004-95d0725c5bb9.jpg"
+        },
+        {
+          "width": 960,
+          "height": 641,
+          "url": "https://trello-backgrounds.s3.amazonaws.com/SharedBackground/960x641/38abcb12d37a2c226542090a8769aae2/photo-1599978364004-95d0725c5bb9.jpg"
+        },
+        {
+          "width": 1024,
+          "height": 683,
+          "url": "https://trello-backgrounds.s3.amazonaws.com/SharedBackground/1024x683/38abcb12d37a2c226542090a8769aae2/photo-1599978364004-95d0725c5bb9.jpg"
+        },
+        {
+          "width": 2048,
+          "height": 1366,
+          "url": "https://trello-backgrounds.s3.amazonaws.com/SharedBackground/2048x1366/38abcb12d37a2c226542090a8769aae2/photo-1599978364004-95d0725c5bb9.jpg"
+        },
+        {
+          "width": 1280,
+          "height": 854,
+          "url": "https://trello-backgrounds.s3.amazonaws.com/SharedBackground/1280x854/38abcb12d37a2c226542090a8769aae2/photo-1599978364004-95d0725c5bb9.jpg"
+        },
+        {
+          "width": 1920,
+          "height": 1281,
+          "url": "https://trello-backgrounds.s3.amazonaws.com/SharedBackground/1920x1281/38abcb12d37a2c226542090a8769aae2/photo-1599978364004-95d0725c5bb9.jpg"
+        },
+        {
+          "width": 2398,
+          "height": 1600,
+          "url": "https://trello-backgrounds.s3.amazonaws.com/SharedBackground/2398x1600/38abcb12d37a2c226542090a8769aae2/photo-1599978364004-95d0725c5bb9.jpg"
+        },
+        {
+          "width": 2560,
+          "height": 1708,
+          "url": "https://trello-backgrounds.s3.amazonaws.com/SharedBackground/original/e17eeea58c87cf1f6fee69a02a692b74/photo-1599978364004-95d0725c5bb9"
+        }
+      ],
+      "backgroundTile": false,
+      "backgroundBrightness": "dark",
+      "backgroundBottomColor": "#11181e",
+      "backgroundTopColor": "#182a34",
+      "canBePublic": true,
+      "canBeEnterprise": true,
+      "canBeOrg": true,
+      "canBePrivate": true,
+      "canInvite": true
+    },
+    "subscribed": false,
+    "labelNames": {
+      "green": "Exercises & Practice",
+      "yellow": "Sync",
+      "orange": "",
+      "red": "Lessons",
+      "purple": "Projects",
+      "blue": "Reading",
+      "sky": "",
+      "lime": "Setup & Meta",
+      "pink": "",
+      "black": "Teacher's Prep"
+    },
+    "dateLastView": "2021-01-13T00:55:33.481Z",
+    "shortUrl": "https://trello.com/b/mnXRPHDL",
+    "templateGallery": null,
+    "premiumFeatures": [],
+    "memberships": [
+      {
+        "id": "5ffe4253796d4a2067343556",
+        "idMember": "52969a4ee6906d4c2c0088ad",
+        "memberType": "admin",
+        "unconfirmed": false,
+        "deactivated": false
+      },
+      {
+        "id": "5ffe42f128ef363f29ab81b7",
+        "idMember": "5fbdbf25ef00531d30b12dc8",
+        "memberType": "normal",
+        "unconfirmed": false,
+        "deactivated": false
+      }
+    ]
+  }
+]
