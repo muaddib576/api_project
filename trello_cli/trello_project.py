@@ -7,8 +7,8 @@ https://alissa-huskey.github.io/python-class/lessons/web-apis.html
 TODO
 ----
 [x] Phase 1: Print the open cards from your To Do list.
-[ ] Phase 2: Show card details
-    [ ] Include any checklist items
+[x] Phase 2: Show card details
+    [x] Include any checklist items
 
 """
 from private import trello_key, trello_token
@@ -106,20 +106,29 @@ def main():
     print_cards(data)
 
     #user requests a specific card and the prints the description, checklist items, and maybe more?
-    card_selection = int(input("Which Card would you like more info on? Card: "))
+    card_selection = input("Which Card would you like more info on? Card: ")
 
-    for i, card in enumerate(data, 1):
-        if i == card_selection:
-            print("-" * 30)
-            print(f"Card {i}")
-            print("-" * 30)
-            print(f"Description: {card['desc']}")
-            
-            #checks if there are checklist items for card, and prints if applicable
-            if bool(card['idChecklists']) == True:
-                print("Checklist:")
-                checklist_data = api_request_checklist(card['idChecklists'])
-                print_checklist(checklist_data)
+    if card_selection.lower() == 'q' or card_selection.lower() == 'quit':
+        print("Buh-Bye...")
+        return
+    
+    card_selection = int(card_selection)
 
+    if card_selection < len(data):
+        #prints card description for user selection
+        for i, card in enumerate(data, 1):
+            if i == card_selection:
+                print("-" * 30)
+                print(f"Card {i}")
+                print("-" * 30)
+                print(f"Description: {card['desc']}")
+                
+                #checks if there are checklist items for card, and prints if applicable
+                if bool(card['idChecklists']) == True:
+                    print("Checklist:")
+                    checklist_data = api_request_checklist(card['idChecklists'])
+                    print_checklist(checklist_data)
+    else:
+        print("There is no such card.")
 
 main()
