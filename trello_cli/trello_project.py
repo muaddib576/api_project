@@ -11,7 +11,16 @@ TODO
     [x] Include any checklist items
 
 """
-from private import trello_key, trello_token
+# if the file and the file being executed are in the same directory you can do
+# it this way
+# from private import trello_key, trello_token
+
+# the . means in this same package (in the same directory)
+# from .private import trello_key, trello_token
+
+# or you can use the module name
+from trello_cli.private import trello_key, trello_token
+
 import requests
 from pprint import pprint
 
@@ -33,7 +42,6 @@ def api_request():
             'cards': 'visible'
             }
         )
-
     if response.ok == False:
         print(f"There was a {response.status_code} error! Because: {response.reason}")
         return
@@ -55,21 +63,17 @@ def api_request_checklist(checklist_id):
             'token': trello_token
             }
         )
-
     if response.ok == False:
         print(f"There was a {response.status_code} error! Because: {response.reason}")
         return
 
     checklist_api_data = response.json()
-
     checklist_items = checklist_api_data['checkItems']
-
     return checklist_items
 
 def print_cards(data):
-    """Takes raw data from API_request and formats/prints active cards, more info available if user requests it"""
+    """Takes raw data from API_request and formats/prints an id, name, due date, shorturl, and labels for active cards"""
 
-    #prints card id, name, shorturl, and labels for all active cards
     for i, card in enumerate(data, 1):
         if card['subscribed'] == False:
             continue
@@ -81,6 +85,7 @@ def print_cards(data):
         print(f"Url: {card['shortUrl']}")
         print(f"Due: {card['due']}")
         
+        #would it be better to not bother creating a list for this?
         label_list = []
         for label in card['labels']:
             label_list.append(label['name'])
@@ -98,6 +103,38 @@ def print_checklist(list_data):
             print("[ ]", end = " ")
         print(checklist['name'])
 
+def card_select_validation(selection, num_cards):
+    """Checks if user card selection is a valid integer"""
+
+    try:
+        int(selection)
+    except ValueError:
+        return False
+
+    # isinstance(value, type) checks if selection is boolean
+    if isinstance(selection, bool):
+        return False
+
+    selection = int(selection)
+
+    if selection >= 0 and selection < num_cards:
+        return True
+    else:
+        return False
+
+def print_card_selection(selected_card, card_data):
+    """Prints selected card description and any checklist items"""
+
+    print("-" * 30)
+    print(f"Card {selected_card}")
+    print("-" * 30)
+    print(f"Description: {card_data['desc']}")
+    
+    #checks if there are checklist items for card, and prints if applicable
+    if bool(card_data['idChecklists']) == True:
+        print("Checklist:")
+        checklist_data = api_request_checklist(card_data['idChecklists'])
+        print_checklist(checklist_data)
 
 def main():
     """Calls api_request and print_card functions"""
@@ -107,28 +144,15 @@ def main():
 
     #user requests a specific card and the prints the description, checklist items, and maybe more?
     card_selection = input("Which Card would you like more info on? Card: ")
-
-    if card_selection.lower() == 'q' or card_selection.lower() == 'quit':
-        print("Buh-Bye...")
-        return
     
-    card_selection = int(card_selection)
+    while card_select_validation(card_selection, len(data)) == False:
+        # ends cli if user inputs Q or Quit
+        if card_selection.lower() == 'q' or card_selection.lower() == 'quit':
+            print("Buh-Bye...")
+            return
+        card_selection = input("That is not a valid card... Which Card would you like more info on? Card: ")
 
-    if card_selection < len(data):
-        #prints card description for user selection
-        for i, card in enumerate(data, 1):
-            if i == card_selection:
-                print("-" * 30)
-                print(f"Card {i}")
-                print("-" * 30)
-                print(f"Description: {card['desc']}")
-                
-                #checks if there are checklist items for card, and prints if applicable
-                if bool(card['idChecklists']) == True:
-                    print("Checklist:")
-                    checklist_data = api_request_checklist(card['idChecklists'])
-                    print_checklist(checklist_data)
-    else:
-        print("There is no such card.")
+    print_card_selection(card_selection, data[card_selection])
 
-main()
+
+# main()
