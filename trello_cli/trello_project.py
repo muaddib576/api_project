@@ -13,13 +13,13 @@ TODO
 """
 # if the file and the file being executed are in the same directory you can do
 # it this way
-# from private import trello_key, trello_token
+from private import trello_key, trello_token
 
 # the . means in this same package (in the same directory)
 # from .private import trello_key, trello_token
 
 # or you can use the module name
-from trello_cli.private import trello_key, trello_token
+# from trello_cli.private import trello_key, trello_token
 
 import requests
 from pprint import pprint
@@ -72,36 +72,63 @@ def api_request_checklist(checklist_id):
     return checklist_items
 
 def print_cards(data):
-    """Takes raw data from API_request and formats/prints an id, name, due date, shorturl, and labels for active cards"""
-
+    """Takes raw data and creates a string with id, name, due date, shorturl, and labels for active cards"""
+    text = ""
     for i, card in enumerate(data, 1):
         if card['subscribed'] == False:
             continue
-        
-        print("-" * 30)
-        print(f"Card {i}")
-        print("-" * 30)
-        print(f"Name: {card['name']}")
-        print(f"Url: {card['shortUrl']}")
-        print(f"Due: {card['due']}")
-        
-        #would it be better to not bother creating a list for this?
-        label_list = []
+        # '!!!' is placeholder for a line of '-'s
+        text += '!!!\n'
+        text += f"Card {i}\n"
+        text += '!!!\n'
+        text += f"Name: {card['name']}\n"
+        text += f"Url: {card['shortUrl']}\n"
+        text += f"Due: {card['due']}\n"
+        text += "Labels: "
         for label in card['labels']:
-            label_list.append(label['name'])
-        
-        print("Labels: " + ", ".join(label_list))
-        print()
+            text += f"{label['name']}, "
+        #removes comma/space from final label and adds new line
+        text = text[:-2] + "\n"
+    # replaces '!!!' with a line of '-'s equal to longest line length
+    temp_text = text.split('\n')
+    max_line = 0
+    for i in temp_text:
+        line_length = len(i)
+        if line_length > max_line:
+            max_line = line_length
+    max_line = ('-' * max_line)
+    text = text.replace('!!!', max_line)
+    return text
 
-def print_checklist(list_data):
-    """Prints the checklist items associated with the selected card and their status"""
+def print_card_selection(selected_card, card_checklist, card_data):
+    """Prints selected card description and any checklist items"""
 
-    for i , checklist in enumerate(list_data, 1):        
-        if checklist['state'] == 'complete':
-            print("[X]", end = " ")
-        else:
-            print("[ ]", end = " ")
-        print(checklist['name'])
+    text = "!!!\n"
+    text += f"Card {selected_card}: {card_data['name']}\n"
+    text += "!!!\n"
+    text += f"Description: {card_data['desc']}\n"
+    
+    # checks if there are checklist items for card, and prints if applicable
+    if card_checklist:
+        text += "Checklist:\n"
+        for i , checklist in enumerate(card_checklist, 1):        
+            if checklist['state'] == 'complete':
+                text += "[X] "
+            else:
+                text += "[ ] "
+            text += f"{checklist['name']}\n"
+
+    # replaces '!!!' with a line of '-'s equal to longest line length
+    temp_text = text.split('\n')
+    max_line = 0
+    for i in temp_text:
+        line_length = len(i)
+        if line_length > max_line:
+            max_line = line_length
+    max_line = ('-' * max_line)
+    text = text.replace('!!!', max_line)
+
+    return text
 
 def card_select_validation(selection, num_cards):
     """Checks if user card selection is a valid integer"""
@@ -117,42 +144,32 @@ def card_select_validation(selection, num_cards):
 
     selection = int(selection)
 
-    if selection >= 0 and selection < num_cards:
+    if selection > 0 and selection <= num_cards:
         return True
     else:
         return False
 
-def print_card_selection(selected_card, card_data):
-    """Prints selected card description and any checklist items"""
-
-    print("-" * 30)
-    print(f"Card {selected_card}")
-    print("-" * 30)
-    print(f"Description: {card_data['desc']}")
-    
-    #checks if there are checklist items for card, and prints if applicable
-    if bool(card_data['idChecklists']) == True:
-        print("Checklist:")
-        checklist_data = api_request_checklist(card_data['idChecklists'])
-        print_checklist(checklist_data)
-
 def main():
     """Calls api_request and print_card functions"""
     data = api_request()
-
-    print_cards(data)
+    text = print_cards(data)
+    print(text)
 
     #user requests a specific card and the prints the description, checklist items, and maybe more?
     card_selection = input("Which Card would you like more info on? Card: ")
-    
     while card_select_validation(card_selection, len(data)) == False:
         # ends cli if user inputs Q or Quit
         if card_selection.lower() == 'q' or card_selection.lower() == 'quit':
             print("Buh-Bye...")
             return
         card_selection = input("That is not a valid card... Which Card would you like more info on? Card: ")
+    card_selection = int(card_selection)
+    selected_card_data = data[card_selection-1]
+    selected_card_checklist = []
+    if selected_card_data['idChecklists']:
+        selected_card_checklist = api_request_checklist(selected_card_data['idChecklists'])
+    text = print_card_selection(card_selection, selected_card_checklist, selected_card_data)
+    print(text)
 
-    print_card_selection(card_selection, data[card_selection])
 
-
-# main()
+main()
