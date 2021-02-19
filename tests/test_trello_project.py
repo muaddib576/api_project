@@ -1,6 +1,6 @@
 """Various tests for the trello cli project"""
 
-from trello_cli.trello_project import card_select_validation, print_cards
+from trello_cli.trello_project import card_select_validation, print_cards, print_card_selection
 
 def test_card_select_validation_nums():
     assert card_select_validation(1,3) == True, 'Should return True'
@@ -34,10 +34,9 @@ Url: 4.5
 Due: True
 Labels: False, 1
 """
-
     data = [
         {
-    "name": 'Test Name A',
+    "name" : 'Test Name A',
     "shortUrl" : 'test.com',
     "due" : 'monday ya dummy',
     "labels" : [
@@ -67,3 +66,19 @@ Labels: False, 1
     ]
 
     assert print_cards(data) == text, "Should return formatted cards"
+
+
+def test_print_card_selection():
+    text = """-----------------------------------------------
+Card 2: its a test card.
+-----------------------------------------------
+Description: This is pretty self-explanatory...
+"""
+    checklist_data = []
+
+    card_data = {
+    "name" : 'its a test card.',
+    "desc" : 'This is pretty self-explanatory...'
+    }
+
+    assert print_card_selection(2, checklist_data, card_data) == text, "Should return formatted cards"

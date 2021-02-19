@@ -13,13 +13,13 @@ TODO
 """
 # if the file and the file being executed are in the same directory you can do
 # it this way
-from private import trello_key, trello_token
+# from private import trello_key, trello_token
 
 # the . means in this same package (in the same directory)
 # from .private import trello_key, trello_token
 
 # or you can use the module name
-# from trello_cli.private import trello_key, trello_token
+from trello_cli.private import trello_key, trello_token
 
 import requests
 from pprint import pprint
@@ -90,6 +90,7 @@ def print_cards(data):
         #removes comma/space from final label and adds new line
         text = text[:-2] + "\n"
     # replaces '!!!' with a line of '-'s equal to longest line length
+    # in retrospect this is not smart if terminal is small...
     temp_text = text.split('\n')
     max_line = 0
     for i in temp_text:
@@ -164,12 +165,14 @@ def main():
             return
         card_selection = input("That is not a valid card... Which Card would you like more info on? Card: ")
     card_selection = int(card_selection)
+    # because index 0 is card 1
     selected_card_data = data[card_selection-1]
-    selected_card_checklist = []
+    # requests checklist data from API if checklist ID is present
+    checklist_data = []
     if selected_card_data['idChecklists']:
-        selected_card_checklist = api_request_checklist(selected_card_data['idChecklists'])
-    text = print_card_selection(card_selection, selected_card_checklist, selected_card_data)
+        checklist_data = api_request_checklist(selected_card_data['idChecklists'])
+    text = print_card_selection(card_selection, checklist_data, selected_card_data)
     print(text)
 
 
-main()
+# main()
