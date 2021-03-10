@@ -1,23 +1,24 @@
 """Various tests for the trello cli project"""
 
-from trello_cli.trello_project import card_select_validation, print_cards, print_card_selection
+from trello_cli.trello_project import (
+        card_select_validation,
+        print_cards,
+        print_card_selection
+)
 
 def test_card_select_validation_nums():
-    assert card_select_validation(1,3) == True, 'Should return True'
-    assert card_select_validation(3,3) == True, 'Should return True'
-    assert card_select_validation(0,1) == False, 'Should return False'
-    assert card_select_validation(0,0) == False, 'Should return False'
-    assert card_select_validation(0,3) == False, 'Should return False'
-    assert card_select_validation(1,0) == False, 'Should return False'
-    assert card_select_validation(4,3) == False, 'Should return False'
-    assert card_select_validation(-1,3) == False, 'Should return False'
+    assert card_select_validation(1,3) == True, 'Should return True if selection is <= cards'
+    assert card_select_validation(3,3) == True, 'Should return True if selection is <= cards'
+    assert card_select_validation(0,1) == False, 'Should return False if selection is zero'
+    assert card_select_validation(0,0) == False, 'Should return False if selection/cards are zero'
+    assert card_select_validation(0,3) == False, 'Should return False if selection is zero'
+    assert card_select_validation(1,0) == False, 'Should return False if num_cards are zero'
+    assert card_select_validation(4,3) == False, 'Should return False if selection is > cards'
+    assert card_select_validation(-1,3) == False, 'Should return False if selection is <= 0'
+
 def test_card_select_validation_str():
-    assert card_select_validation('derp',3) == False, 'Should return False'
-def test_card_select_validation_bool():
-    assert card_select_validation(True,2) == False, 'Should return False'
-    assert card_select_validation(False,2) == False, 'Should return False'
-
-
+    assert card_select_validation('derp',3) == False, 'Should return False is selection is str'
+    
 def test_print_cards():
     text = """-----------------------------
 Card 1
@@ -35,38 +36,29 @@ Due: True
 Labels: False, 1
 """
     data = [
-        {
-    "name" : 'Test Name A',
-    "shortUrl" : 'test.com',
-    "due" : 'monday ya dummy',
-    "labels" : [
-        {
-            "name" : 'real things'
+        {   
+            "name" : 'Test Name A',
+            "shortUrl" : 'test.com',
+            "due" : 'monday ya dummy',
+            "labels" : [
+                {"name" : 'real things'},
+                {"name" : 'not fake'}
+            ],
+            "subscribed" : True
         },
         {
-            "name" : 'not fake'
+            "name": -5,
+            "shortUrl" : 4.5,
+            "due" : True,
+            "labels" : [
+                {"name" : False},
+                {"name" : 1}
+            ],
+            "subscribed" : True
         }
-    ],
-    "subscribed" : True
-    },
-    {
-    "name": -5,
-    "shortUrl" : 4.5,
-    "due" : True,
-    "labels" : [
-        {
-            "name" : False,
-        },
-        {
-            "name" : 1,
-        }
-    ],
-    "subscribed" : True
-    }
     ]
 
     assert print_cards(data) == text, "Should return formatted cards"
-
 
 def test_print_card_selection():
     text = """-----------------------------------------------

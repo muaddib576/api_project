@@ -19,3 +19,6 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+
+[tool.poetry.scripts]
+init_cli = "trello_cli.trello_project:main"
