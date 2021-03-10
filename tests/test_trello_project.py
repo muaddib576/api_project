@@ -20,7 +20,8 @@ def test_card_select_validation_str():
     assert card_select_validation('derp',3) == False, 'Should return False is selection is str'
     
 def test_print_cards():
-    text = """-----------------------------
+    text = """
+-----------------------------
 Card 1
 -----------------------------
 Name: Test Name A
@@ -61,7 +62,8 @@ Labels: False, 1
     assert print_cards(data) == text, "Should return formatted cards"
 
 def test_print_card_selection():
-    text = """-----------------------------------------------
+    text = """
+-----------------------------------------------
 Card 2: its a test card.
 -----------------------------------------------
 Description: This is pretty self-explanatory...

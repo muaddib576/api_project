@@ -6,7 +6,10 @@ https://alissa-huskey.github.io/python-class/lessons/web-apis.html
 
 TODO
 ----
-
+[ ] change flow such that "view card" is a called action, rather than assumed
+[ ] change initial api call to include all list types (To Do, In-Progress, etc)
+[ ] present user cards grouped by list (w/ only name and number of card)
+[ ] add command to move from to-do to in-progress
 """
 # if the file and the file being executed are in the same directory you can do
 # it this way
@@ -144,6 +147,11 @@ def card_select_validation(selection, num_cards):
         return False
 
     return selection > 0 and selection <= num_cards
+
+def new_main():
+    """Presents user with actions, makes the appropriet API calls based on input, and prints output"""
+    command_bank = ['v','view','m','move','q','quit']
+
 
 def main():
     """Calls api_request and print_card functions"""
